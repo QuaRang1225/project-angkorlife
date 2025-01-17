@@ -10,8 +10,9 @@ import SwiftUI
 struct SignInView: View {
     
     @State var id = ""
+    @State var showErrorMessage = false
+    @Environment(\.dismiss) var dismiss
     private let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-    
 
     var body: some View {
         VStack{
@@ -31,9 +32,15 @@ struct SignInView: View {
                 .padding(10)
                 .foregroundStyle(.white)
             SelectButton(text:"Log in",height:55,textColor:.white,buttonColor: .indigo){
-                print("asda")
+                guard !id.isEmpty else { return showErrorMessage = true }
+                UserDefaultsManager.instance.signIn(id:id)
+                dismiss()
             }
             .padding(10)
+            if showErrorMessage{
+                Text("Please enter ID..").foregroundStyle(.red)
+            }
+            
             Spacer()
             Image("IMG_EARTH")
                 .resizable()
@@ -49,3 +56,4 @@ struct SignInView: View {
 #Preview {
     SignInView()
 }
+

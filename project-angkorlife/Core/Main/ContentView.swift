@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var isLoggedIn = false
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack{
+            
         }
-        .padding()
+        .onAppear{
+            isLoggedIn = !UserDefaultsManager.instance.isUserLoggedIn()
+        }
+        .fullScreenCover(isPresented:$isLoggedIn){
+            SignInView()
+        }
     }
 }
 
