@@ -30,17 +30,8 @@ struct SignInView: View {
                 }
                 .padding(10)
                 .foregroundStyle(.white)
-            Button{
-                
-            }label:{
-                Capsule()
-                    .foregroundStyle(.indigo)
-                    .frame(height:55)
-                    .overlay {
-                        Text("Log in")
-                            .foregroundStyle(.white)
-                            .font(.KantumruyProBold(18))
-                    }
+            SelectButton(text:"Log in",height:55,textColor:.white,buttonColor: .indigo){
+                print("asda")
             }
             .padding(10)
             Spacer()
