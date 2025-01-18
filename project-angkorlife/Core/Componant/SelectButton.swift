@@ -9,11 +9,11 @@ import SwiftUI
 
 struct SelectButton: View {
     
-    let text:String
-    let height:CGFloat
-    let textColor:Color
-    let buttonColor:Color
-    let action:()->()
+    let text:String         //텍스트 문자열
+    let height:CGFloat      //버튼 높이
+    let textColor:Color     //버튼 색상
+    let buttonColor:Color   //버튼 텍스트 색상
+    let action:()->()       //버튼 이벤트
     
     var body: some View {
         Button{
