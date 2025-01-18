@@ -12,6 +12,7 @@ import Foundation
 struct project_angkorlifeTests {
     @available(iOS 15.0, *)
     
+    //로그인
     @Test func testIsUserLoggedIn() async throws {
         let isLoggedIn = UserDefaultsManager.instance.isUserLoggedIn()
         #expect(isLoggedIn == true)
