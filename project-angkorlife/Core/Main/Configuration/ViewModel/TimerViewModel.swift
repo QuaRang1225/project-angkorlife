@@ -6,29 +6,48 @@
 //
 
 import Foundation
-
-class TimerViewModel{
+import SwiftUI
+class TimerViewModel:ObservableObject{
     
-    private var deadLine = Date()
-    private var timer: Timer?   //타이머 선언
+    @Published var remainingTime = ["","","",""]                        //시간이 지남에 따라 업데이트 되는 시간단위 리스트(일,시간,분,초)
+    let unit = ["DAY","HR","MIN","SEC"]                                 //해당 시간단위를 나타내는 문자열 리스트
+    private let deadLine = Date().stringToDate("2025-02-03 00:00:00")   //투표마감시간 설정
+    private var timer: Timer?                                           //타이머 선언
     
+    //ViewModel이 초기화될때 카운트다운 시작
+    init(){
+        countDown {
+            print("complete")
+        }
+    }
+    //카운트 다운메서드
+    //1초에 시간이 경과 될때 투표마감시간이 되지 않을 경우, 남은시간 계산 메서드 실행
+    //
     func countDown(onComplete:(()->())?){
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false){ [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ [weak self] _ in
             guard let self else { return }
             if self.deadLine <= Date(){
                 onComplete?()
             }
-            let
+            DispatchQueue.main.async {
+                withAnimation(.bouncy){
+                    self.calculateRemainingTime()
+                }
+            }
         }
     }
-    
-}
-
-extension Date{
-    func stringToDate(_ date:String)->Date{
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = date
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        return dateFormatter.date(from: date)!
+    //남은시간 계산 메서드
+    //마감시간에서 현재시간의 차이를 구함
+    //만약 차이를 구할 수 없으면 00:00:00:00으로 세팅
+    private func calculateRemainingTime(){
+        let calender = Calendar.current
+        guard let diff = calender.dateComponents([.day,.hour,.minute,.second], from: Date(), to: deadLine) as DateComponents? else{ return }
+        let days = String(format: "%02d", diff.day ?? 0)
+        let hours = String(format: "%02d", diff.hour ?? 0)
+        let minutes = String(format: "%02d", diff.minute ?? 0)
+        let seconds = String(format: "%02d", diff.second ?? 0)
+        remainingTime = [days,hours,minutes,seconds]
     }
 }
+
+
