@@ -16,34 +16,10 @@ struct TimerView: View {
     var body: some View {
         VStack{
             Spacer()
-            Image("IMG_MAIN")
-                .resizable()
-                .frame(height:bounds?.width)
-            HStack(spacing:10){
-                ForEach(0..<4){ index in
-                    RoundedRectangle(cornerRadius: 3)
-                        .frame(width: 60, height: 60)
-                        .foregroundStyle(.gray.opacity(0.1))
-                        .overlay {
-                            Text(timerViewModel.remainingTime[index])
-                                .foregroundStyle(.white)
-                        }
-                        .overlay(alignment: .bottom) {
-                            Text(timerViewModel.unit[index])
-                                .offset(y:30)
-                                .font(.KantumruyProMedium(18))
-                        }
-                    if timerViewModel.remainingTime.count-1 > index{
-                        Text(":")
-                            .foregroundStyle(.white)
-                    }
-                }
-            }
-            .padding(.top)
+            overviewImageView
+            timerView
             Spacer()
-            Image("IMG_EARTH")
-                .resizable()
-                .frame(height:(bounds?.width ?? 0)/3)
+            backgroundEarthView
         }
         .font(.KantumruyProMedium(25))
         .foregroundStyle(.white)
@@ -54,4 +30,43 @@ struct TimerView: View {
 
 #Preview {
     TimerView()
+}
+
+extension TimerView{
+    //오버 뷰
+    private var overviewImageView:some View{
+        Image("IMG_MAIN")
+            .resizable()
+            .frame(height:bounds?.width)
+    }
+    //타이머 뷰
+    private var timerView:some View{
+        HStack(spacing:10){
+            ForEach(0..<4){ index in
+                RoundedRectangle(cornerRadius: 3)
+                    .frame(width: 60, height: 60)
+                    .foregroundStyle(.gray.opacity(0.1))
+                    .overlay {
+                        Text(timerViewModel.remainingTime[index])
+                            .foregroundStyle(.white)
+                    }
+                    .overlay(alignment: .bottom) {
+                        Text(timerViewModel.unit[index])
+                            .offset(y:30)
+                            .font(.KantumruyProMedium(18))
+                    }
+                if timerViewModel.remainingTime.count-1 > index{
+                    Text(":")
+                        .foregroundStyle(.white)
+                }
+            }
+        }
+        .padding(.top)
+    }
+    //배경 지구
+    private var backgroundEarthView:some View{
+        Image("IMG_EARTH")
+            .resizable()
+            .frame(height:(bounds?.width ?? 0)/3)
+    }
 }
