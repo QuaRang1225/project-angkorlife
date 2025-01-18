@@ -12,8 +12,8 @@ class TimerViewModel:ObservableObject{
     @Published var remainingTime = ["","","",""]                                    //시간이 지남에 따라 업데이트 되는 시간단위 리스트(일,시간,분,초)
     @Published var expired = false                                                  //투표시간 마감 유무
     let unit = ["DAY","HR","MIN","SEC"]                                             //해당 시간단위를 나타내는 문자열 리스트
-    private let deadLine = Date().stringToDate("2025-01-03 00:00:00") ?? Date()     //투표마감시간 설정
-    private var timer: Timer?                                                       //타이머 선언
+    private let deadLine = Date().stringToDate("2025-02-03 00:00:00") ?? Date()     //투표마감시간 설정
+    var timer: Timer?                                                       //타이머 선언
     
     //ViewModel이 초기화될때 카운트다운 시작
     init(){
