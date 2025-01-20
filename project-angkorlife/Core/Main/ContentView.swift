@@ -11,7 +11,7 @@ struct ContentView: View {
     @State var isLoggedIn = false
     var body: some View {
         ZStack{
-            
+            MainView()
         }
         .onAppear{
             isLoggedIn = !UserDefaultsManager.instance.isUserLoggedIn()

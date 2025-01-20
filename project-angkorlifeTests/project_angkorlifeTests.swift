@@ -6,20 +6,30 @@
 //
 
 import Testing
+import SwiftUI
 import Foundation
+import Combine
+import Alamofire
 @testable import project_angkorlife
 
 struct project_angkorlifeTests {
     @available(iOS 15.0, *)
     
+    //로그인 유무 확인 테스트
     @Test func testIsUserLoggedIn() async throws {
         let isLoggedIn = UserDefaultsManager.instance.isUserLoggedIn()
         #expect(isLoggedIn == true)
     }
+    //ID 매칭 확인 테스트
     @Test func testSignIn() async throws {
         let userA = "userA"
         let userB = "userB"
         UserDefaultsManager.instance.signIn(id:userA)
         #expect(userB == UserDefaults.standard.object(forKey:"user_id") as? String)
+    }
+    //url 숨김처리 테스트
+    @Test func testConfiguration() async throws{
+        let api = APIClient.baseURL
+        #expect("https://api-wmu-dev.angkorcoms.com" == api)
     }
 }

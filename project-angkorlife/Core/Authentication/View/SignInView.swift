@@ -69,7 +69,7 @@ extension SignInView{
     }
     //에러 메세지 출력
     @ViewBuilder
-    var errorMessageView:some View{
+    private var errorMessageView:some View{
         if showErrorMessage{
             Text("Please your enter ID..").foregroundStyle(.red)
         }
