@@ -10,6 +10,7 @@ import Kingfisher
 
 struct CandidateProfileView: View {
     let id:Int
+    @State var showAlert = false
     @EnvironmentObject var vm:VoteViewModel
     
     //투표 유무에 따라 버튼 타입을 바꾸기 위함
@@ -38,13 +39,15 @@ struct CandidateProfileView: View {
                             groupBoxView
                         }
                         .padding(10)
+                        footerView
                     }
                 }
             }
             voteButtonView
         }
+        .alert(isPresented: $showAlert){ alert }
         .background(.black)
-        .onAppear{ vm.fetchCandidate(id: id, userId: vm.userId) }
+        .onAppear{ vm.fetchCandidate(id: id, userId: vm.userId ?? "") }
         .onDisappear{ vm.candidate = nil }
     }
 }
@@ -104,17 +107,18 @@ extension CandidateProfileView{
         SelectButton(text:voted ? "Voted":"Vote", height: 55, textColor:voted ? .indigo: .white, buttonColor: voted ? .white:.indigo,image:voted ? "IMG_VOTE" : "") {
             //투표가 되지 않았거나 투표를 3번 이하로 했을때
             if !voted,vm.votedCandidateList.count < 3{
+                showAlert = true
                 vm.candidate?.voted.toggle()
             }
-            vm.sendVote(userId: vm.userId, id: id)
+            vm.sendVote(userId: vm.userId ?? "", id: id)
         }
-//        .overlay{
-//            Image(voted ? "IMG_VOTE" : "")
-//                .resizable()
-//                .frame(width: 25,height: 25)
-//                .offset(x:-27.5)
-//        }
         .padding([.top,.horizontal])
+    }
+    private var alert:Alert{
+        let title = Text("Voting completed")
+        let message = Text("Thank you for voting")
+        let dismiss = Alert.Button.default(Text("Confirm"))
+        return Alert(title: title,message: message,dismissButton: dismiss)
     }
 }
 

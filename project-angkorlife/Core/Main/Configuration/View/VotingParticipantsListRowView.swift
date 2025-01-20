@@ -58,7 +58,7 @@ extension VotingParticipantsListRowView{
                 vm.votedCandidateList.append(profile.id)
                 profile.voteCnt = "\((Int(profile.voteCnt)!) + 1)"
             }
-            vm.sendVote(userId: vm.userId, id: profile.id)
+            vm.sendVote(userId: vm.userId ?? "", id: profile.id)
         }
     }
 }

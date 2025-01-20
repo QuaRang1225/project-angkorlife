@@ -12,7 +12,7 @@ struct SignInView: View {
     @State private var id = ""                      //ID정보
     @State private var showErrorMessage = false     //ID를 입력하지 않을 시 에러문구 표시 유무
     @Environment(\.dismiss) private var dismiss     //해당 뷰 닫음
-    
+    @EnvironmentObject var vm:VoteViewModel
     //Scene의 크기(해당 기기에서의 뷰의 크기 감지)
     private let bounds = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.screen.bounds
 
@@ -34,6 +34,7 @@ struct SignInView: View {
 
 #Preview {
     SignInView()
+        .environmentObject(VoteViewModel())
 }
 
 extension SignInView{
@@ -63,6 +64,9 @@ extension SignInView{
         SelectButton(text:"Log in",height:55,textColor:.white,buttonColor: .indigo){
             guard !id.isEmpty else { return showErrorMessage = true }
             UserDefaultsManager.instance.signIn(id:id)
+            vm.userId = id
+            vm.fetchCandidateList()
+            vm.fetchVotedCandidateList(userId: id)
             dismiss()
         }
         .padding(10)
