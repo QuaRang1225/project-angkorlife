@@ -13,7 +13,7 @@ class VoteViewModel:ObservableObject{
     @Published var candidateList:CandidateList? = nil
     @Published var candidate:Candidate? = nil
     @Published var votedCandidateList:[Int] = []
-    
+    @Published var userId = UserDefaultsManager.instance.getUserId()
     var error = PassthroughSubject<(String,Bool),Never>()
     var cancel = Set<AnyCancellable>()
     
@@ -22,9 +22,9 @@ class VoteViewModel:ObservableObject{
             .sink { completion in
                 switch completion {
                 case .finished:
-                    print("API 호출 성공")
+                    print("투표자 리스트 조회 API 호출 성공")
                 case .failure(let error):
-                    print("API 호출 실패: \(error.localizedDescription)")
+                    print("투표자 리스트 조회 API 호출 실패: \(error.localizedDescription)")
                 }
             } receiveValue: { (value:CandidateList) in
                 self.candidateList = value
@@ -35,9 +35,9 @@ class VoteViewModel:ObservableObject{
             .sink { completion in
                 switch completion {
                 case .finished:
-                    print("API 호출 성공")
+                    print("투표자 프로필 조회 API 호출 성공")
                 case .failure(let error):
-                    print("API 호출 실패: \(error.localizedDescription)")
+                    print("투표자 프로필 조회 API 호출 실패: \(error.localizedDescription)")
                 }
             } receiveValue: { (value:Candidate) in
                 self.candidate = value
@@ -48,22 +48,23 @@ class VoteViewModel:ObservableObject{
             .sink { completion in
                 switch completion {
                 case .finished:
-                    print("API 호출 성공 \(completion)")
+                    print("투표 API 호출 성공 \(completion)")
                 case .failure(let error):
-                    print("API 호출 실패: \(error.localizedDescription)")
+                    print("투표 API 호출 실패: \(error.localizedDescription)")
                 }
             } receiveValue: { value in
                 self.error.send((value,!value.isEmpty ? true : false))
+                print("눌림\(value) \(!value.isEmpty ? true : false)")
             }.store(in: &cancel)
     }
-    func fetchVotedCandidateList(){
-        APIService.requset(router: .candidateList)
+    func fetchVotedCandidateList(userId:String){
+        APIService.requset(router: .votedCandidateList(userId: userId))
             .sink { completion in
                 switch completion {
                 case .finished:
-                    print("API 호출 성공")
+                    print("유저 투표 투표자 프로필 조회 API 호출 성공")
                 case .failure(let error):
-                    print("API 호출 실패: \(error.localizedDescription)")
+                    print("유저 투표 투표자 프로필 조회 API 호출 실패: \(error.localizedDescription)")
                 }
             } receiveValue: { (value:[Int]) in
                 self.votedCandidateList = value

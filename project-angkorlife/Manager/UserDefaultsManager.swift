@@ -24,4 +24,8 @@ class UserDefaultsManager{
     func signIn(id:String){
         UserDefaults.standard.set(id,forKey:userId)
     }
+    
+    func getUserId()->String{
+        return UserDefaults.standard.string(forKey: userId) ?? ""
+    }
 }

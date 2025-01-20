@@ -9,7 +9,12 @@ import SwiftUI
 import Kingfisher
 
 struct VotingParticipantsListRowView: View {
+    
     let profile:Content
+    var voted:Bool{
+        vm.votedCandidateList.contains(profile.id)
+    }
+    @EnvironmentObject var vm:VoteViewModel
     var body: some View {
         VStack{
             NavigationLink {
@@ -27,8 +32,11 @@ struct VotingParticipantsListRowView: View {
                         .foregroundStyle(.indigo)
                 }
             }
-            SelectButton(text: "Vote", height: 40, textColor: .white, buttonColor: .indigo) {
-                
+            SelectButton(text:voted ? "Voted":"Vote", height: 40, textColor:voted ? .indigo: .white, buttonColor: voted ? .white:.indigo) {
+                if !voted,vm.votedCandidateList.count < 3{
+                    vm.votedCandidateList.append(profile.id)
+                }
+                vm.sendVote(userId: vm.userId, id: profile.id)
             }
         }
         .padding(5)
@@ -37,5 +45,6 @@ struct VotingParticipantsListRowView: View {
 
 #Preview {
     VotingParticipantsListRowView(profile: CustomData.instance.listContent)
+        .environmentObject(VoteViewModel())
         .background(.black)
 }

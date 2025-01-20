@@ -10,6 +10,7 @@ import SwiftUI
 struct VotingParticipantsListView: View {
     let columns = [GridItem(),GridItem()]
     @StateObject var vm = VoteViewModel()
+    @State var alert = (message:"",event:false)
     @State var event = false
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -24,8 +25,8 @@ struct VotingParticipantsListView: View {
                     .foregroundStyle(.gray)
                 LazyVGrid(columns: columns) {
                     ForEach(content,id:\.self) { profile in
-                        
-                        VotingParticipantsListRowView(profile: profile)
+                        VotingParticipantsListRowView(profile:profile)
+                            .environmentObject(vm)
                     }
                 }
                 Text("COPYRIGHT © WUPSC ALL RIGHT RESERVED.")
@@ -40,6 +41,14 @@ struct VotingParticipantsListView: View {
         .background(.black)
         .onAppear{
             vm.fetchCandidateList()
+            vm.fetchVotedCandidateList(userId: vm.userId)
+        }
+        .onReceive(vm.error){ (message,event) in
+            alert.event = event
+            alert.message = message
+        }
+        .alert(isPresented: $alert.event){
+            Alert(title: Text(alert.message),dismissButton: .cancel(Text("Confirm")))
         }
     }
 }

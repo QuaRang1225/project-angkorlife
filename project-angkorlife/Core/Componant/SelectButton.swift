@@ -20,11 +20,11 @@ struct SelectButton: View {
             action()
         }label:{
             Capsule()
-                .foregroundStyle(.indigo)
+                .foregroundStyle(buttonColor)
                 .frame(height:height)
                 .overlay {
                     Text(text)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(textColor)
                         .font(.KantumruyProBold(18))
                 }
         }
