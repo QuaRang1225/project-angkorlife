@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct VoteCandidateList: Codable {
+struct CandidateList: Codable {
     let content: [Content]
     let pageable: Pageable
     let totalPages, totalElements: Int
