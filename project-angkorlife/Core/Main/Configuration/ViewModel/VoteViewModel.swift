@@ -10,7 +10,11 @@ import Combine
 
 class VoteViewModel:ObservableObject{
     
-    @Published var voteCandidateList:VoteCandidateList? = nil
+    @Published var candidateList:CandidateList? = nil
+    @Published var candidate:Candidate? = nil
+    @Published var votedCandidateList:[Int] = []
+    
+    var error = PassthroughSubject<(String,Bool),Never>()
     var cancel = Set<AnyCancellable>()
     
     func fetchVoteCandidateList(){

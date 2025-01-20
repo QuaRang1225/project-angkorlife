@@ -55,7 +55,7 @@ enum APIRouter:URLRequestConvertible{
             request.method = method
             switch self{
             case .vote:
-                return try URLEncoding(destination: .httpBody).encode(request, with: parameters)    //body
+                return try JSONEncoding.default.encode(request, with: parameters)                   //body
             case .candidate,.votedCandidateList:
                 return try URLEncoding(destination: .queryString).encode(request, with: parameters) //query string
             case .candidateList:                                                                    //no param
