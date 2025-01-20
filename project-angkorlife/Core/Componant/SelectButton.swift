@@ -13,7 +13,7 @@ struct SelectButton: View {
     let height:CGFloat      //버튼 높이
     let textColor:Color     //버튼 색상
     let buttonColor:Color   //버튼 텍스트 색상
-    var offset:CGFloat?     //버튼 가로 위치
+    var image:String?     //버튼 가로 위치
     let action:()->()       //버튼 이벤트
     
     var body: some View {
@@ -24,10 +24,14 @@ struct SelectButton: View {
                 .foregroundStyle(buttonColor)
                 .frame(height:height)
                 .overlay {
-                    Text(text)
-                        .foregroundStyle(textColor)
-                        .font(.KantumruyProBold(18))
-                        .offset(x:offset ?? 0)
+                    Label {
+                        Text(text)
+                            .foregroundStyle(textColor)
+                            .font(.KantumruyProBold(18))
+                    } icon: {
+                        Image(image ?? "")
+                            .offset(x:5)
+                    }
                 }
         }
     }
