@@ -8,10 +8,10 @@
 import Foundation
 import Alamofire
 
-final class ApiClient{
+final class APIClient{
     
     var session:Session
-    static let shared = ApiClient()
+    static let shared = APIClient()
     static let baseURL =  "\(Bundle.main.infoDictionary?["BASE_URL"] ?? "")"    //baseURL 설정
     
     let monitors = [APIMonitor()] as [EventMonitor]                             //이벤트 모니터 추가
