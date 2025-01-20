@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct TimerView: View {
-    
-    //Scene의 크기(해당 기기에서의 뷰의 크기 감지)
-    private let bounds = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.screen.bounds
+
     @StateObject var timerViewModel = TimerViewModel()
     
     var body: some View {
@@ -25,7 +23,6 @@ struct TimerView: View {
         .font(.KantumruyProMedium(25))
         .foregroundStyle(.white)
         .background(.black)
-        .ignoresSafeArea()
     }
 }
 
@@ -38,7 +35,7 @@ extension TimerView{
     private var overviewImageView:some View{
         Image("IMG_MAIN")
             .resizable()
-            .frame(height:bounds?.width)
+            .frame(height:bounds.width)
     }
     //타이머 뷰
     private var timerView:some View{
@@ -68,7 +65,7 @@ extension TimerView{
     private var backgroundEarthView:some View{
         Image("IMG_EARTH")
             .resizable()
-            .frame(height:(bounds?.width ?? 0)/3)
+            .frame(height:bounds.width/3)
     }
     //투표시간 마감 경고 메세지
     private var alert:Alert{
