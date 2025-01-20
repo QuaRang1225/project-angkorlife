@@ -21,7 +21,7 @@ struct Content: Codable,Hashable {
     let id, candidateNumber: Int
     let name: String
     let profileUrl: String
-    let voteCnt: String
+    var voteCnt: String
 
 }
 struct Pageable: Codable {

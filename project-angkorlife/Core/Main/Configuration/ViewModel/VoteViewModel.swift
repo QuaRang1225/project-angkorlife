@@ -10,11 +10,12 @@ import Combine
 
 class VoteViewModel:ObservableObject{
     
-    @Published var candidateList:CandidateList? = nil
-    @Published var candidate:Candidate? = nil
-    @Published var votedCandidateList:[Int] = []
-    @Published var userId = UserDefaultsManager.instance.getUserId()
-    var error = PassthroughSubject<(String,Bool),Never>()
+    @Published var candidateList:CandidateList? = nil                   //투표자 리스트
+    @Published var candidate:Candidate? = nil                           //투표자 상세정보
+    @Published var votedCandidateList:[Int] = []                        //유저가 투표한 참여자 리스트
+    @Published var userId = UserDefaultsManager.instance.getUserId()    //유저 Id
+        
+    var error = PassthroughSubject<(String,Bool),Never>()               //경고팝업을 띄우기 위한 Subject
     var cancel = Set<AnyCancellable>()
     
     func fetchCandidateList(){
@@ -38,8 +39,7 @@ class VoteViewModel:ObservableObject{
             .sink { completion in
                 ResponseCompletionManager.instance.compltionHandler(message: "투표", completion: completion)
             } receiveValue: { value in
-                self.error.send((value,!value.isEmpty ? true : false))
-                print("눌림\(value) \(!value.isEmpty ? true : false)")
+                self.error.send((value,!value.isEmpty ? true : false))  //예외가 생겼을 경우의 응답 메세지를 받아 경고를 출력하기 위한 이벤트
             }.store(in: &cancel)
     }
     func fetchVotedCandidateList(userId:String){
