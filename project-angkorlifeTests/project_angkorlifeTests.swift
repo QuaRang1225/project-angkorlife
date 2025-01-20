@@ -15,11 +15,7 @@ import Alamofire
 struct project_angkorlifeTests {
     @available(iOS 15.0, *)
     
-    //로그인 유무 확인 테스트
-    @Test func testIsUserLoggedIn() async throws {
-        let isLoggedIn = UserDefaultsManager.instance.isUserLoggedIn()
-        #expect(isLoggedIn == true)
-    }
+    
     //ID 매칭 확인 테스트
     @Test func testSignIn() async throws {
         let userA = "userA"

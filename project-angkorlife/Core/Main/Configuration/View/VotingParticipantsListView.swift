@@ -10,7 +10,7 @@ import SwiftUI
 struct VotingParticipantsListView: View {
     let columns = [GridItem(),GridItem()]           //그리드 아이템 수
     @State var isError = (message:"",event:false)     //투표 요청 시 받아오는 데이터를 경고팝업에 띄우기 위함
-    @StateObject var vm = VoteViewModel()
+    @EnvironmentObject var vm:VoteViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -22,6 +22,7 @@ struct VotingParticipantsListView: View {
         }
         .foregroundStyle(.white)
         .padding(.vertical,20)
+        .padding(10)
         .background(.black)
         .onAppear(perform: appear)
         .onReceive(vm.error){ recive(message: $0, event: $1) }
@@ -32,6 +33,7 @@ struct VotingParticipantsListView: View {
 #Preview {
     ScrollView {
         VotingParticipantsListView()
+            .environmentObject(VoteViewModel())
     }
 }
 
@@ -45,7 +47,7 @@ extension VotingParticipantsListView{
     //뷰가 나타났을 떄 실행
     private func appear(){
         vm.fetchCandidateList()
-        vm.fetchVotedCandidateList(userId: vm.userId)
+        vm.fetchVotedCandidateList(userId: vm.userId ?? "")
     }
     //투표 진행 후 예외를 위해 경고 알림을 띄워야할 떄 실행
     private func recive(message:String,event:Bool){

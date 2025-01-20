@@ -35,7 +35,8 @@ extension VotingParticipantsListRowView{
     //투표 참여자 상세프로필 이동
     var navigationLinkView:some View{
         NavigationLink {
-            
+            CandidateProfileView(id: profile.id)
+                .environmentObject(vm)
         } label: {
             VStack{
                 KFImage(URL(string:profile.profileUrl))
@@ -57,7 +58,7 @@ extension VotingParticipantsListRowView{
                 vm.votedCandidateList.append(profile.id)
                 profile.voteCnt = "\((Int(profile.voteCnt)!) + 1)"
             }
-            vm.sendVote(userId: vm.userId, id: profile.id)
+            vm.sendVote(userId: vm.userId ?? "", id: profile.id)
         }
     }
 }

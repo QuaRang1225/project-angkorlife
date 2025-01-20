@@ -10,10 +10,10 @@ import Combine
 
 class VoteViewModel:ObservableObject{
     
-    @Published var candidateList:CandidateList? = nil                   //투표자 리스트
-    @Published var candidate:Candidate? = nil                           //투표자 상세정보
-    @Published var votedCandidateList:[Int] = []                        //유저가 투표한 참여자 리스트
-    @Published var userId = UserDefaultsManager.instance.getUserId()    //유저 Id
+    @Published var candidateList:CandidateList? = nil                           //투표자 리스트
+    @Published var candidate:Candidate? = nil                                   //투표자 상세정보
+    @Published var votedCandidateList:[Int] = []                                //유저가 투표한 참여자 리스트
+    @Published var userId:String? = UserDefaultsManager.instance.getUserId()    //유저 Id
         
     var error = PassthroughSubject<(String,Bool),Never>()               //경고팝업을 띄우기 위한 Subject
     var cancel = Set<AnyCancellable>()

@@ -22,6 +22,7 @@ struct TimerView: View {
         .alert(isPresented: $timerViewModel.expired){ alert }
         .font(.KantumruyProMedium(25))
         .foregroundStyle(.white)
+        .padding(.top,50)
         .background(.black)
     }
 }
@@ -46,7 +47,6 @@ extension TimerView{
                     .foregroundStyle(.gray.opacity(0.1))
                     .overlay {
                         Text(timerViewModel.remainingTime[index])
-                            .foregroundStyle(.white)
                     }
                     .overlay(alignment: .bottom) {
                         Text(timerViewModel.unit[index])
@@ -55,11 +55,11 @@ extension TimerView{
                     }
                 if timerViewModel.remainingTime.count-1 > index{
                     Text(":")
-                        .foregroundStyle(.white)
                 }
             }
         }
-        .padding(.top)
+        .foregroundStyle(.white)
+        .padding(.vertical,20)
     }
     //배경 지구
     private var backgroundEarthView:some View{
@@ -69,8 +69,8 @@ extension TimerView{
     }
     //투표시간 마감 경고 메세지
     private var alert:Alert{
-        let title = Text("투표시간이 마감됐습니다.")
-        let dismiss = Alert.Button.default(Text("확인"))
+        let title = Text("Voting time is closed")
+        let dismiss = Alert.Button.default(Text("Confirm"))
         return Alert(title: title,dismissButton: dismiss)
     }
 }
