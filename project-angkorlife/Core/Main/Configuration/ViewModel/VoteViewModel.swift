@@ -37,7 +37,7 @@ class VoteViewModel:ObservableObject{
     func sendVote(userId:String,id:Int){
         APIService.requset(router: .vote(userId: userId, id: id))
             .sink { completion in
-                ResponseCompletionManager.instance.complgit tionHandler(message: "투표", completion: completion)
+                ResponseCompletionManager.instance.compltionHandler(message: "투표", completion: completion)
             } receiveValue: { value in
                 self.error.send((value,!value.isEmpty ? true : false))  //예외가 생겼을 경우의 응답 메세지를 받아 경고를 출력하기 위한 이벤트
             }.store(in: &cancel)
