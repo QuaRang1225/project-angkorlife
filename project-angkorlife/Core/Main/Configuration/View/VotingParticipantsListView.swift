@@ -22,6 +22,7 @@ struct VotingParticipantsListView: View {
         }
         .foregroundStyle(.white)
         .padding(.vertical,20)
+        .padding(10)
         .background(.black)
         .onAppear(perform: appear)
         .onReceive(vm.error){ recive(message: $0, event: $1) }

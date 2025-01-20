@@ -29,6 +29,7 @@ public struct Carousel<Data, Content: View>: View {
         .overlay(alignment:.bottom){ indicatorView }
         .onAppear(perform: {setBothSideIndex()})
         .onChange(of: currentIndex) { getBothSideIndex($0) }
+        .onDisappear(perform: {disappear()})
     }
     
 }
@@ -49,6 +50,11 @@ extension Carousel{
             }
         }
         .padding()
+    }
+    //캐러셀이 화면에서 사라지면 타이머 정지
+    private func disappear(){
+        timer?.invalidate()
+        timer = nil
     }
     //양쪽끝에 예비 인덱스값 추가(뷰 첫 등장 시 호출)
     private func setBothSideIndex() {

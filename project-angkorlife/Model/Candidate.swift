@@ -13,7 +13,7 @@ struct Candidate: Codable {
     let hobby, talent, ambition, contents: String
     let profileInfoList: [ProfileInfoList]
     let regDt: String
-    let voted: Bool
+    var voted: Bool
 }
 
 struct ProfileInfoList: Codable,Hashable {

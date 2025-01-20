@@ -35,7 +35,8 @@ extension VotingParticipantsListRowView{
     //투표 참여자 상세프로필 이동
     var navigationLinkView:some View{
         NavigationLink {
-            
+            CandidateProfileView(id: profile.id)
+                .environmentObject(vm)
         } label: {
             VStack{
                 KFImage(URL(string:profile.profileUrl))
