@@ -20,7 +20,7 @@ class TimerViewModel:ObservableObject{
         countDown()
     }
     //카운트 다운메서드
-    //1초에 시간이 경과 될때 투표마감시간이 되지 않을 경우, 남은시간 계산 메서드 실행
+    //1초의 시간이 경과 될때 투표마감시간이 되지 않을 경우, 남은시간 계산 메서드 실행
     //투표시간이 마감됐을 경우 시간을 00:00:00:00으로 초기화하고 timer를 초기화하며 경고표시를 띄울 변수를 업데이트
     func countDown(){
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ [weak self] _ in

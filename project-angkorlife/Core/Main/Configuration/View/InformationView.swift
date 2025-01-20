@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InformationView: View {
-    private let backgroundColor = LinearGradient(colors: [.black,.black,.black.opacity(0.9)], startPoint: .top, endPoint: .bottom)
+    private let backgroundColor = LinearGradient(colors: [.black,.gray.opacity(0.1)], startPoint: .top, endPoint: .bottom)
     var body: some View {
         VStack(alignment: .leading){
             subHeadLineView
@@ -17,7 +17,7 @@ struct InformationView: View {
             infomationView
         }
         .padding(10)
-        .padding(.vertical)
+        .padding(.vertical,30)
         .background(backgroundColor)
     }
 }

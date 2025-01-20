@@ -23,7 +23,7 @@ struct SelectButton: View {
                 .foregroundStyle(.indigo)
                 .frame(height:height)
                 .overlay {
-                    Text("Log in")
+                    Text(text)
                         .foregroundStyle(.white)
                         .font(.KantumruyProBold(18))
                 }

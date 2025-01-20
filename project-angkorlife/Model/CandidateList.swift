@@ -17,7 +17,7 @@ struct CandidateList: Codable {
     let numberOfElements: Int
     let first, empty: Bool
 }
-struct Content: Codable {
+struct Content: Codable,Hashable {
     let id, candidateNumber: Int
     let name: String
     let profileUrl: String
