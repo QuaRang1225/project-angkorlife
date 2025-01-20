@@ -16,7 +16,7 @@ struct Candidate: Codable {
     let voted: Bool
 }
 
-struct ProfileInfoList: Codable {
+struct ProfileInfoList: Codable,Hashable {
     let fileArea, displayOrder: Int
     let profileUrl: String
     let mimeType: String
