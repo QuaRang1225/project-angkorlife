@@ -36,7 +36,7 @@ extension ContentView{
                 VStack(spacing:0){
                     TimerView()
                     InformationView()
-                    VotingParticipantsListView()
+                    VotingCandidaterListView()
                 }
             }
             .background(Color.black)
