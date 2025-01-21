@@ -8,8 +8,9 @@
 import SwiftUI
 import Kingfisher
 
-struct VotingParticipantsListRowView: View {
+struct VotingCandidaterListRowView: View {
     
+    @State var pop = false
     @State var profile:Content                                 //투표참여자의 간략한 정보
     var voted:Bool{                                     //투표진행되었음을 판단
         vm.votedCandidateList.contains(profile.id)
@@ -26,12 +27,12 @@ struct VotingParticipantsListRowView: View {
 }
 
 #Preview {
-    VotingParticipantsListRowView(profile: CustomData.instance.listContent)
+    VotingCandidaterListRowView(profile: CustomData.instance.listContent)
         .environmentObject(VoteViewModel())
         .background(.black)
 }
 
-extension VotingParticipantsListRowView{
+extension VotingCandidaterListRowView{
     //투표 참여자 상세프로필 이동
     var navigationLinkView:some View{
         NavigationLink {
@@ -56,9 +57,16 @@ extension VotingParticipantsListRowView{
         SelectButton(text:voted ? "Voted":"Vote", height: 40, textColor:voted ? .indigo: .white, buttonColor: voted ? .white:.indigo) {
             if !voted,vm.votedCandidateList.count < 3{
                 vm.votedCandidateList.append(profile.id)
+                pop = true
                 profile.voteCnt = "\((Int(profile.voteCnt)!) + 1)"
             }
             vm.sendVote(userId: vm.userId ?? "", id: profile.id)
+        }
+        .overlay{
+            if pop{
+                LottieView(name: "POP",loopMode: .playOnce)
+                    .allowsHitTesting(false)
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ import Combine
 
 class VoteViewModel:ObservableObject{
     
+    @Published var isLoggined = false                                           //로그인 성공 유무
     @Published var candidateList:CandidateList? = nil                           //투표자 리스트
     @Published var candidate:Candidate? = nil                                   //투표자 상세정보
     @Published var votedCandidateList:[Int] = []                                //유저가 투표한 참여자 리스트

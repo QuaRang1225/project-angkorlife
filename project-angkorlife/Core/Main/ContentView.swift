@@ -14,9 +14,19 @@ struct ContentView: View {
         ZStack(alignment: .topTrailing){
             navigationView
             logoutButtonView
+            if vm.isLoggined{
+                loginSuccessTextView
+            }
         }
         .environmentObject(vm)
         .onAppear{ isLoggedIn = vm.userId == nil }
+        .onChange(of: vm.isLoggined){ _ in
+            DispatchQueue.main.asyncAfter(deadline: .now()+3){
+                withAnimation(.easeInOut(duration: 0.5)){
+                    vm.isLoggined = false
+                }
+            }
+        }
         .fullScreenCover(isPresented:$isLoggedIn){
             SignInView()
                 .environmentObject(vm)
@@ -36,7 +46,7 @@ extension ContentView{
                 VStack(spacing:0){
                     TimerView()
                     InformationView()
-                    VotingParticipantsListView()
+                    VotingCandidaterListView()
                 }
             }
             .background(Color.black)
@@ -59,5 +69,16 @@ extension ContentView{
                 .font(.KantumruyProBold(20))
                 .padding()
         }
+    }
+    //로그인 성공 문구
+    var loginSuccessTextView:some View{
+        Text("Login completed successfully")
+            .foregroundStyle(.white)
+            .font(.KantumruyProMedium(18))
+            .padding(10)
+            .padding(.horizontal)
+            .background(.gray.opacity(0.5))
+            .cornerRadius(3)
+            .frame(maxWidth: .infinity,maxHeight: .infinity)
     }
 }
