@@ -26,6 +26,7 @@ struct MainPoster: View {
                 }
                 .foregroundStyle(.white)
             }
+            .ignoresSafeArea(.keyboard)
             .frame(height:bounds.width)
             .padding(.bottom)
     }
