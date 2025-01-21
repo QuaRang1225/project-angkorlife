@@ -41,7 +41,21 @@ struct CandidateProfileView: View {
                         .padding(10)
                         footerView
                     }
+                    else{
+                        Image(systemName: "arrow.down")
+                            .font(.largeTitle)
+                            .padding(.bottom,5)
+                        Text("Unable to load page")
+                            .font(.KantumruyProMedium(25))
+                        Text("Pull down to refresh..")
+                            .font(.KantumruyProMedium(17.5))
+                    }
                 }
+                .foregroundStyle(.white)
+            }
+            .refreshable {
+                vm.candidate = nil
+                vm.fetchCandidate(id: id, userId: vm.userId ?? "")
             }
             voteButtonView
         }
