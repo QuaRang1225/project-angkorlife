@@ -10,6 +10,7 @@ import Kingfisher
 
 struct VotingCandidaterListRowView: View {
     
+    @State var pop = false
     @State var profile:Content                                 //투표참여자의 간략한 정보
     var voted:Bool{                                     //투표진행되었음을 판단
         vm.votedCandidateList.contains(profile.id)
@@ -56,9 +57,16 @@ extension VotingCandidaterListRowView{
         SelectButton(text:voted ? "Voted":"Vote", height: 40, textColor:voted ? .indigo: .white, buttonColor: voted ? .white:.indigo) {
             if !voted,vm.votedCandidateList.count < 3{
                 vm.votedCandidateList.append(profile.id)
+                pop = true
                 profile.voteCnt = "\((Int(profile.voteCnt)!) + 1)"
             }
             vm.sendVote(userId: vm.userId ?? "", id: profile.id)
+        }
+        .overlay{
+            if pop{
+                LottieView(name: "POP",loopMode: .playOnce)
+                    .allowsHitTesting(false)
+            }
         }
     }
 }

@@ -11,6 +11,8 @@ import Kingfisher
 struct CandidateProfileView: View {
     let id:Int
     @State var showAlert = false
+    @State var pop = false
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var vm:VoteViewModel
     
     //투표 유무에 따라 버튼 타입을 바꾸기 위함
@@ -30,6 +32,7 @@ struct CandidateProfileView: View {
     }
     var body: some View {
         VStack{
+            dismissButtonView
             ScrollView(showsIndicators: false){
                 VStack{
                     if let candidate = vm.candidate{
@@ -42,13 +45,7 @@ struct CandidateProfileView: View {
                         footerView
                     }
                     else{
-                        Image(systemName: "arrow.down")
-                            .font(.largeTitle)
-                            .padding(.bottom,5)
-                        Text("Unable to load page")
-                            .font(.KantumruyProMedium(25))
-                        Text("Pull down to refresh..")
-                            .font(.KantumruyProMedium(17.5))
+                        refreshView
                     }
                 }
                 .foregroundStyle(.white)
@@ -63,6 +60,7 @@ struct CandidateProfileView: View {
         .background(.black)
         .onAppear{ vm.fetchCandidate(id: id, userId: vm.userId ?? "") }
         .onDisappear{ vm.candidate = nil }
+        .navigationBarBackButtonHidden()
     }
 }
 
@@ -72,6 +70,20 @@ struct CandidateProfileView: View {
 }
 
 extension CandidateProfileView{
+    //뒤로가기 버튼
+    var dismissButtonView:some View{
+        HStack{
+            Button{
+                dismiss()
+            } label:{
+                Image(systemName: "chevron.left")
+                    .foregroundStyle(.white)
+                    .font(.KantumruyProBold(20))
+            }
+            .padding(10)
+            Spacer()
+        }
+    }
     //캐러셀 뷰
     func carouselView(_ candidate:Candidate)->some View{
         Carousel(items: candidate.profileInfoList){ item in
@@ -122,11 +134,30 @@ extension CandidateProfileView{
             //투표가 되지 않았거나 투표를 3번 이하로 했을때
             if !voted,vm.votedCandidateList.count < 3{
                 showAlert = true
+                pop = true
                 vm.candidate?.voted.toggle()
             }
             vm.sendVote(userId: vm.userId ?? "", id: id)
         }
+        .overlay{
+            if pop{
+                LottieView(name: "POP",loopMode: .playOnce)
+                    .allowsHitTesting(false)
+            }
+        }
         .padding([.top,.horizontal])
+    }
+    //새로고침 화면
+    var refreshView:some View{
+        VStack{
+            Image(systemName: "arrow.down")
+                .font(.largeTitle)
+                .padding(.bottom,5)
+            Text("Unable to load page")
+                .font(.KantumruyProMedium(25))
+            Text("Pull down to refresh..")
+                .font(.KantumruyProMedium(17.5))
+        }
     }
     private var alert:Alert{
         let title = Text("Voting completed")

@@ -14,7 +14,7 @@ struct TimerView: View {
     var body: some View {
         VStack{
             Spacer()
-            overviewImageView
+            MainPoster()
             timerView
             Spacer()
             backgroundEarthView
@@ -32,12 +32,6 @@ struct TimerView: View {
 }
 
 extension TimerView{
-    //오버 뷰
-    private var overviewImageView:some View{
-        Image("IMG_MAIN")
-            .resizable()
-            .frame(height:bounds.width)
-    }
     //타이머 뷰
     private var timerView:some View{
         HStack(spacing:10){

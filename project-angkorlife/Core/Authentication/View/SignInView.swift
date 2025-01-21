@@ -13,13 +13,12 @@ struct SignInView: View {
     @State private var showErrorMessage = false     //ID를 입력하지 않을 시 에러문구 표시 유무
     @Environment(\.dismiss) private var dismiss     //해당 뷰 닫음
     @EnvironmentObject var vm:VoteViewModel
-    //Scene의 크기(해당 기기에서의 뷰의 크기 감지)
-    private let bounds = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.screen.bounds
+    
 
     var body: some View {
         VStack{
             Spacer()
-            overviewImageView
+            MainPoster()
             textFieldView
             signInButtonView
             errorMessageView
@@ -38,12 +37,6 @@ struct SignInView: View {
 }
 
 extension SignInView{
-    //오버뷰 이미지
-    private var overviewImageView:some View{
-        Image("IMG_MAIN")
-            .resizable()
-            .frame(height:bounds?.width)
-    }
     //아이디 입력 텍스트 필드
     private var textFieldView:some View{
         TextField("Enter your ID",text: $id)
@@ -67,6 +60,9 @@ extension SignInView{
             vm.userId = id
             vm.fetchCandidateList()
             vm.fetchVotedCandidateList(userId: id)
+            withAnimation(.easeInOut(duration: 1)){
+                vm.isLoggined = true
+            }
             dismiss()
         }
         .padding(10)
@@ -82,6 +78,6 @@ extension SignInView{
     private var backgroundEarthView:some View{
         Image("IMG_EARTH")
             .resizable()
-            .frame(height:(bounds?.width ?? 0)/3)
+            .frame(height:bounds.width/3)
     }
 }
