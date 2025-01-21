@@ -11,6 +11,7 @@ import Kingfisher
 struct CandidateProfileView: View {
     let id:Int
     @State var showAlert = false
+    @State var pop = false
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var vm:VoteViewModel
     
@@ -133,9 +134,16 @@ extension CandidateProfileView{
             //투표가 되지 않았거나 투표를 3번 이하로 했을때
             if !voted,vm.votedCandidateList.count < 3{
                 showAlert = true
+                pop = true
                 vm.candidate?.voted.toggle()
             }
             vm.sendVote(userId: vm.userId ?? "", id: id)
+        }
+        .overlay{
+            if pop{
+                LottieView(name: "POP",loopMode: .playOnce)
+                    .allowsHitTesting(false)
+            }
         }
         .padding([.top,.horizontal])
     }
