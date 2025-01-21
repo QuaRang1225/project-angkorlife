@@ -18,7 +18,7 @@ struct SignInView: View {
     var body: some View {
         VStack{
             Spacer()
-            overviewImageView
+            MainPoster()
             textFieldView
             signInButtonView
             errorMessageView
@@ -37,12 +37,6 @@ struct SignInView: View {
 }
 
 extension SignInView{
-    //오버뷰 이미지
-    private var overviewImageView:some View{
-        Image("IMG_MAIN")
-            .resizable()
-            .frame(height:bounds.width)
-    }
     //아이디 입력 텍스트 필드
     private var textFieldView:some View{
         TextField("Enter your ID",text: $id)
