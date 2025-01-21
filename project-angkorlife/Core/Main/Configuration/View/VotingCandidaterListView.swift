@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct VotingParticipantsListView: View {
+struct VotingCandidaterListView: View {
     let columns = [GridItem(),GridItem()]           //그리드 아이템 수
     @State var isError = (message:"",event:false)     //투표 요청 시 받아오는 데이터를 경고팝업에 띄우기 위함
     @EnvironmentObject var vm:VoteViewModel
@@ -32,12 +32,12 @@ struct VotingParticipantsListView: View {
 
 #Preview {
     ScrollView {
-        VotingParticipantsListView()
+        VotingCandidaterListView()
             .environmentObject(VoteViewModel())
     }
 }
 
-extension VotingParticipantsListView{
+extension VotingCandidaterListView{
     //경고팝업
     private var alert:Alert{
         let title = Text(isError.message)
@@ -71,7 +71,7 @@ extension VotingParticipantsListView{
     private func candidateListView(_ content:[Content])->some View{
         LazyVGrid(columns: columns) {
             ForEach(content,id:\.self) { profile in
-                VotingParticipantsListRowView(profile:profile)
+                VotingCandidaterListRowView(profile:profile)
                     .environmentObject(vm)
             }
         }
